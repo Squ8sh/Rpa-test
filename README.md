@@ -9,17 +9,11 @@
 - **Python**: Разработка приложений и автоматизация задач.
 - **C++**: Программирование и разработка программного обеспечения.
 
-## Мои проекты
-
-- [Проект 1](https://github.com/ваш_ник/proekti_1) - краткое описание проекта.
-- [Проект 2](https://github.com/ваш_ник/proekti_2) - краткое описание проекта.
-- [Проект 3](https://github.com/ваш_ник/proekti_3) - краткое описание проекта.
 
 ## Свяжитесь со мной
 
-- Email: [ваш_email@example.com](mailto:ваш_email@example.com)
-- LinkedIn: [ваш_профиль](https://linkedin.com/in/ваш_профиль)
-- GitHub: [ваш_ник](https://github.com/ваш_ник)
+- Email: [ваш_squ8sh@gmail.com](mailto:squ8sh@gmail.com)
+- GitHub: [Squ8sh]([https://github.com/ваш_ник](https://github.com/Squ8sh))
 
 Спасибо за посещение моего профиля!
 # RPA 
