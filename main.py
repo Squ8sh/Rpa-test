@@ -7,12 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import logging
 
-# Настройка логирования
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Точка входа в программу
 def main():
-    # Загрузка данных из Excel файла
     try:
         data = pd.read_excel('challenge.xlsx')
         logging.info("Данные успешно загружены из Excel файла.")
@@ -33,11 +30,9 @@ def main():
         return
 
     try:
-        # Переход на сайт
         driver.get("https://www.rpachallenge.com/")
         logging.info("Переход на сайт выполнен.")
 
-        # Находим и нажимаем кнопку Start
         try:
             start_button = WebDriverWait(driver, 10).until(
                 EC.element_to_be_clickable((By.XPATH, "//button[text()='Start']"))
@@ -48,37 +43,40 @@ def main():
             logging.error(f"Ошибка при нажатии кнопки 'Start': {e}")
             return
 
-        # Заполнение форм на 10 страницах
         for page in range(10):
             logging.info(f"Заполнение страницы {page + 1} из 10.")
             try:
-                # Ожидание загрузки полей ввода
                 WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, "//input")))
-                inputs = driver.find_elements(By.XPATH, "//input[@ng-reflect-name]")
 
-                # Заполняем каждое поле формы
-                for i, input_field in enumerate(inputs):
-                    input_field.clear()  # Стираем, если там что-то есть
-                    input_field.send_keys(str(data.iloc[page, i]))  # Заполняем данными из Excel
+                field_mapping = {
+                    'labelFirstName': 'First Name',
+                    'labelLastName': 'Last Name',
+                    'labelCompanyName': 'Company Name',
+                    'labelRole': 'Role in Company',
+                    'labelAddress': 'Address',
+                    'labelEmail': 'Email',
+                    'labelPhone': 'Phone Number'
+                }
+                for key, value in field_mapping.items():
+                    input_field = driver.find_element(By.XPATH, f"//input[@ng-reflect-name='{key}']")
+                    input_field.clear()  
+                    input_field.send_keys(str(data[value][page]))  
                 logging.info(f"Страница {page + 1} заполнена.")
 
-                # Нажимаем кнопку Submit
                 submit_button = WebDriverWait(driver, 10).until(
                     EC.element_to_be_clickable((By.XPATH, "//input[@type='submit' or contains(@class, 'btn') and contains(@class, 'uiColorButton')]"))
                 )
-                driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)  # Прокрутка к кнопке
-                driver.execute_script("arguments[0].click();", submit_button)  # Используем JavaScript для клика
+                driver.execute_script("arguments[0].scrollIntoView(true);", submit_button)  
+                driver.execute_script("arguments[0].click();", submit_button) 
                 logging.info(f"Кнопка 'Submit' на странице {page + 1} нажата.")
 
             except Exception as e:
                 logging.error(f"Ошибка при заполнении страницы {page + 1}: {e}")
                 return
 
-
     except Exception as e:
         logging.error(f"Общая ошибка в процессе выполнения: {e}")
     finally:
-        # Ожидание перед закрытием браузера
         close_browser = input("Закрыть браузер? (y/n): ")
         if close_browser.lower() == 'y':
             driver.quit()
