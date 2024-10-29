@@ -93,7 +93,7 @@ def main():
                 logging.error(f"Ошибка при заполнении страницы {filled_pages + 1}: {e}")
                 return
 
-            
+
     except Exception as e:
         logging.error(f"Общая ошибка в процессе выполнения: {e}")
     finally:
