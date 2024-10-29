@@ -93,19 +93,7 @@ def main():
                 logging.error(f"Ошибка при заполнении страницы {filled_pages + 1}: {e}")
                 return
 
-            # Проверяем, заполнены ли уже 10 страниц
-            if filled_pages % 10 == 0:  # Каждые 10 страниц
-                # Нажимаем кнопку Reset
-                try:
-                    reset_button = WebDriverWait(driver, 10).until(
-                        EC.element_to_be_clickable((By.XPATH, "//button[text()='Reset']"))
-                    )
-                    reset_button.click()
-                    logging.info("Кнопка 'Reset' нажата.")
-                except Exception as e:
-                    logging.error(f"Ошибка при нажатии кнопки 'Reset': {e}")
-                    return
-
+            
     except Exception as e:
         logging.error(f"Общая ошибка в процессе выполнения: {e}")
     finally:
